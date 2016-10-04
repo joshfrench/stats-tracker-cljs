@@ -2,7 +2,7 @@
   (:require [goog.dom :as gdom]
             [om.next :as om :refer-macros [defui]]
             [om.dom :as dom]
-            [thirteenth-age.iklass :refer [ac]]
+            [thirteenth-age.protocols :refer [ac]]
             [sablono.core :as html :refer-macros [html]])
   (:require-macros [thirteenth-age.class :refer [class]]))
 
@@ -21,7 +21,7 @@
 (defmethod read :ac
   [{:keys [state] :as env} key _]
   (let [{:keys [class level str con dex int wis cha]} @state]
-    {:value (ac (new class level str con dex int wis cha))}))
+    {:value 7 #_(ac (new class level str con dex int wis cha))}))
 
 (defmulti mutate om/dispatch)
 
@@ -40,8 +40,7 @@
       {:action #(swap! state assoc stat (int new-value))})))
 
 (defonce app-state
-  (atom {:class Barbarian
-         :level 1
+  (atom {:level 1
          :str   8
          :dex   8
          :con   8
