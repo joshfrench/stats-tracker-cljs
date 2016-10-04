@@ -4,7 +4,7 @@
             [om.dom :as dom]
             [thirteenth-age.iklass :refer [ac]]
             [sablono.core :as html :refer-macros [html]])
-  (:require-macros [thirteenth-age.macros :refer [klass]]))
+  (:require-macros [thirteenth-age.macros :refer [class]]))
 
 (defn middle [a b c] (-> [a b c] sort (nth 1)))
 
