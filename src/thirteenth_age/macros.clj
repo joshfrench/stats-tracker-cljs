@@ -1,4 +1,8 @@
-(ns thirteenth-age.macros)
+(ns thirteenth-age.macros
+  (:require [thirteenth-age.iklass :refer [IKlass]]))
+
+(defn formula->fn [[name & rest]] `(~name [~(symbol '_)] ~@rest))
 
 (defmacro klass [name & fns]
-  (do `(defrecord ~name ~(vec ['hp]))))
+  (let [stats (map formula->fn fns)]
+    (do `(defrecord ~name [~(symbol 'hp)] IKlass ~@['(ac [_] (+ hp 1))]))))

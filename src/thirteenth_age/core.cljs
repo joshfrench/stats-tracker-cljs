@@ -2,19 +2,13 @@
   (:require [goog.dom :as gdom]
             [om.next :as om :refer-macros [defui]]
             [om.dom :as dom]
+            [thirteenth-age.iklass :refer [ac]]
             [sablono.core :as html :refer-macros [html]])
   (:require-macros [thirteenth-age.macros :refer [klass]]))
 
 (defn middle [a b c] (-> [a b c] sort (nth 1)))
 
 (defn modifier [x] (-> x (- 10) (/ 2) int))
-
-(defprotocol IClass
-  (ac [stats] "Calculates armor class"))
-
-(defrecord Barbarian [level str dex con wis int cha]
-  IClass
-  (ac [_] (-> (middle str dex con) modifier (+ 12 level))))
 
 (defmulti read om/dispatch)
 
