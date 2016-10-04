@@ -1,4 +1,4 @@
-(ns thirteenth-age.macros
+(ns thirteenth-age.class
   (:require [thirteenth-age.iklass :refer [IKlass]]))
 
 (defn formula->fn [[name & rest]] `(~name [~(symbol '_)] ~@rest))
