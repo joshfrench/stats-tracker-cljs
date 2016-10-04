@@ -1,4 +1,4 @@
-(ns thirteenth-age.protocols)
+(ns stats-tracker.protocols)
 
 (defprotocol ClassStats
   (ac [_]))

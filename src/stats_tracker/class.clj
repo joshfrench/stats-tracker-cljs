@@ -1,5 +1,5 @@
-(ns thirteenth-age.class
-  (:require [thirteenth-age.protocols :refer [ClassStats]]))
+(ns stats-tracker.class
+  (:require [stats-tracker.protocols :refer [ClassStats]]))
 
 (defn formula->fn
   [[name & rest]]

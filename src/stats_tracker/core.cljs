@@ -1,10 +1,10 @@
-(ns thirteenth-age.core
+(ns stats-tracker.core
   (:require [goog.dom :as gdom]
             [om.next :as om :refer-macros [defui]]
             [om.dom :as dom]
-            [thirteenth-age.protocols :refer [ac]]
+            [stats-tracker.protocols :refer [ac]]
             [sablono.core :as html :refer-macros [html]])
-  (:require-macros [thirteenth-age.class :refer [class]]))
+  (:require-macros [stats-tracker.class :refer [class]]))
 
 (defn middle [a b c] (-> [a b c] sort (nth 1)))
 
