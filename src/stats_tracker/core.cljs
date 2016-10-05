@@ -64,6 +64,10 @@
     {:state app-state
      :parser (om/parser {:read read :mutate mutate})}))
 
+(defn class->option [c]
+  (let [class-name "Class"]
+    [:option {:key class-name} class-name]))
+
 (defui Tracker
   static om/IQuery
   (query [this]
@@ -72,6 +76,9 @@
   (render [this]
     (let [{:keys [level ac dex con str]} (om/props this)]
       (html [:div
+             [:p "Class "
+              [:select {:on-change #(om/transact! reconciler `[(class/change {:class ~(.. % -target -value)})])}
+              (map class->option classes)]]
              [:p "Level "
               [:input {:type "number"
                        :on-change #(om/transact! reconciler `[(level/change {:level ~(.. % -target -value)})])
