@@ -3,9 +3,9 @@
 
 (defn formula->fn
   [[name & rest]]
-  `(~name [~(symbol '_)]
-          (let [{:keys [~(symbol 'hp)]} ~(symbol 'stats)] ~@rest)))
+  `(~name [~'_]
+          (let [{:keys ~'[level str dex con wis int cha]} ~'stats] ~@rest)))
 
 (defmacro class [name & fns]
   (let [stats (map formula->fn fns)]
-    (do `(defrecord ~name [~(symbol 'stats)] ClassStats ~@(map formula->fn fns)))))
+    (do `(defrecord ~name [~'stats] ClassStats ~@(map formula->fn fns)))))
