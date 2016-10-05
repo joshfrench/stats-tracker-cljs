@@ -2,13 +2,9 @@
   (:require [goog.dom :as gdom]
             [om.next :as om :refer-macros [defui]]
             [om.dom :as dom]
-            [stats-tracker.protocols :refer [ac]]
-            [sablono.core :as html :refer-macros [html]])
-  (:require-macros [stats-tracker.class :refer [class]]))
-
-(defn middle [a b c] (-> [a b c] sort (nth 1)))
-
-(defn modifier [x] (-> x (- 10) (/ 2) int))
+            [sablono.core :as html :refer-macros [html]]
+            [stats-tracker.protocols :refer [ac class-name]]
+            [stats-tracker.classes :refer [Smasher Sneaker]]))
 
 (defmulti read om/dispatch)
 
@@ -20,8 +16,9 @@
 
 (defmethod read :ac
   [{:keys [state] :as env} key _]
-  (let [{:keys [class level str con dex int wis cha]} @state]
-    {:value 7 #_(ac (new class level str con dex int wis cha))}))
+  (let [{:keys [class] :as stats} @state
+        character (new class stats)]
+    {:value (ac character)}))
 
 (defmulti mutate om/dispatch)
 
@@ -39,8 +36,22 @@
     (when (valid-stat? stat)
       {:action #(swap! state assoc stat (int new-value))})))
 
+(def class-map
+  {"Smasher" Smasher
+   "Sneaker" Sneaker})
+
+(def classes [Smasher Sneaker])
+
+(defn valid-class? [class-name] (contains? class-map class-name))
+
+(defmethod mutate 'class/change
+  [{:keys [state]} _ {new-class :class}]
+  (when (valid-class? new-class)
+    {:action #(swap! state assoc :class (class-map new-class))}))
+
 (defonce app-state
-  (atom {:level 1
+  (atom {:class Smasher
+         :level 1
          :str   8
          :dex   8
          :con   8
