@@ -36,21 +36,16 @@
     (when (valid-stat? stat)
       {:action #(swap! state assoc stat (int new-value))})))
 
-(def class-map
-  {"Smasher" Smasher
-   "Sneaker" Sneaker})
-
 (def classes [Smasher Sneaker])
-
-(defn valid-class? [class-name] (contains? class-map class-name))
+(def class-map (zipmap ["Smasher" "Sneaker"] classes))
 
 (defmethod mutate 'class/change
   [{:keys [state]} _ {new-class :class}]
-  (when (valid-class? new-class)
-    {:action #(swap! state assoc :class (class-map new-class))}))
+  (when (some #{new-class} classes)
+    {:action #(swap! state assoc :class new-class)}))
 
 (defonce app-state
-  (atom {:class Smasher
+  (atom {:class (class-map (-> class-map keys sort first))
          :level 1
          :str   8
          :dex   8
@@ -64,10 +59,6 @@
     {:state app-state
      :parser (om/parser {:read read :mutate mutate})}))
 
-(defn class->option [c]
-  (let [class-name "Class"]
-    [:option {:key class-name} class-name]))
-
 (defui Tracker
   static om/IQuery
   (query [this]
@@ -77,8 +68,8 @@
     (let [{:keys [level ac dex con str]} (om/props this)]
       (html [:div
              [:p "Class "
-              [:select {:on-change #(om/transact! reconciler `[(class/change {:class ~(.. % -target -value)})])}
-              (map class->option classes)]]
+              [:select {:on-change #(om/transact! reconciler `[(class/change {:class ~(class-map (.. % -target -value))})])}
+              (map #(vector :option {:key %} %) (keys class-map))]]
              [:p "Level "
               [:input {:type "number"
                        :on-change #(om/transact! reconciler `[(level/change {:level ~(.. % -target -value)})])
