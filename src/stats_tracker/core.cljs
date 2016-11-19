@@ -1,10 +1,16 @@
 (ns stats-tracker.core
-  (:require [goog.dom :as gdom]
+   (:require [clojure.string :refer [upper-case]]
+            [goog.dom :as gdom]
             [om.next :as om :refer-macros [defui]]
             [om.dom :as dom]
             [sablono.core :as html :refer-macros [html]]
-            [stats-tracker.protocols :refer [ac class-name]]
-            [stats-tracker.classes :refer [Smasher Sneaker]]))
+            [stats-tracker.protocols :refer [ac pd md hp atk hit miss]]
+            [stats-tracker.classes :refer [Smasher Sneaker]])
+   (:require-macros [stats-tracker.class :refer [class]]))
+
+(defn character [state]
+  (let [{:keys [class] :as stats} @state]
+    (new class stats)))
 
 (defmulti read om/dispatch)
 
@@ -15,10 +21,32 @@
       {:value v})))
 
 (defmethod read :ac
-  [{:keys [state] :as env} key _]
-  (let [{:keys [class] :as stats} @state
-        character (new class stats)]
-    {:value (ac character)}))
+  [{:keys [state]} _ _]
+  {:value (ac (character state))})
+
+(defmethod read :pd
+  [{:keys [state]} _ _]
+  {:value (pd (character state))})
+
+(defmethod read :md
+  [{:keys [state]} _ _]
+  {:value (md (character state))})
+
+(defmethod read :hp
+  [{:keys [state]} _ _]
+  {:value (hp (character state))})
+
+(defmethod read :atk
+  [{:keys [state]} _ _]
+  {:value (atk (character state))})
+
+(defmethod read :hit
+  [{:keys [state]} _ _]
+  {:value (hit (character state))})
+
+(defmethod read :miss
+  [{:keys [state]} _ _]
+  {:value (miss (character state))})
 
 (defmulti mutate om/dispatch)
 
@@ -37,7 +65,7 @@
       {:action #(swap! state assoc stat (int new-value))})))
 
 (def classes [Smasher Sneaker])
-(def class-map (zipmap ["Smasher" "Sneaker"] classes))
+(def class-map (zipmap ["Smashy Smash" "Sneaky Mofo"] classes))
 
 (defmethod mutate 'class/change
   [{:keys [state]} _ {new-class :class}]
@@ -59,13 +87,23 @@
     {:state app-state
      :parser (om/parser {:read read :mutate mutate})}))
 
+(defn stat->name [s]
+  (-> s name str upper-case))
+
+(defn stat-input [stat val]
+  [:p (stat->name stat) " "
+   [:input {:type "number"
+            :on-change #(om/transact! reconciler `[(stat/change {~stat ~(.. % -target -value)})])
+            :value val}]])
+
 (defui Tracker
   static om/IQuery
   (query [this]
-    [:level :str :dex :con :ac])
+    [:level :str :dex :con :int :wis :cha :ac :pd :md :hp :atk :hit :miss])
   Object
   (render [this]
-    (let [{:keys [level ac dex con str]} (om/props this)]
+    (let [{:keys [level ac pd md hp atk hit miss]} (om/props this)
+          stat #(stat-input % (% (om/props this)))]
       (html [:div
              [:p "Class "
               [:select {:on-change #(om/transact! reconciler `[(class/change {:class ~(class-map (.. % -target -value))})])}
@@ -76,19 +114,19 @@
                        :value level
                        :min 1
                        :max 10}]]
-             [:p "STR "
-              [:input {:type "number"
-                       :on-change #(om/transact! reconciler `[(stat/change {:str ~(.. % -target -value)})])
-                       :value str}]]
-             [:p "DEX "
-              [:input {:type "number"
-                       :on-change #(om/transact! reconciler `[(stat/change {:dex ~(.. % -target -value)})])
-                       :value dex}]]
-             [:p "CON "
-              [:input {:type "number"
-                       :on-change #(om/transact! reconciler `[(stat/change {:con ~(.. % -target -value)})])
-                       :value con}]]
-             [:p "AC " ac]]))))
+             (stat :str)
+             (stat :con)
+             (stat :dex)
+             (stat :int)
+             (stat :wis)
+             (stat :cha)
+             [:p "AC " ac]
+             [:p "PD " pd]
+             [:p "MD " md]
+             [:p "HP " hp]
+             [:p "ATTACK +" (:melee atk) " melee"]
+             [:p "HIT (" level " WEAPON) +" (:melee hit)]
+             [:p "MISS " (:melee miss)]]))))
 
 (om/add-root! reconciler
   Tracker (gdom/getElement "app"))
