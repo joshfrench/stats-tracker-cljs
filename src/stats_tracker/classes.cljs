@@ -16,5 +16,7 @@
   ac (-> (middle con dex wis) modifier (+ 12 level))
   pd (-> (middle str con dex) modifier (+ 12 level))
   md (-> (middle int wis cha) modifier (+ 10 level))
-  hp (* (+ 6 (modifier con)) (hp-multiplier level))
-  atk)
+  hp (* (+ 6 (modifier con)) (hp-multiplier level)))
+
+(def classes {"Smashy Smash"  Smasher
+                "Sneaky Mofo"   Sneaker})
