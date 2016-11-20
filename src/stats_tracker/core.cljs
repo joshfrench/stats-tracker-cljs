@@ -4,11 +4,11 @@
              [clojure.string :refer [upper-case]]
              [goog.dom :as gdom]
              [stats-tracker.classes :refer [classes]]
-             [stats-tracker.ui :refer [Tracker tracker]]
+             [stats-tracker.ui :refer [Tracker]]
              [stats-tracker.parser :as p]))
 
 (defonce app-state
-  (atom {:class (-> classes vals first)
+  (atom {:class (-> classes keys first)
          :level 1
          :str   8
          :dex   8
@@ -21,6 +21,8 @@
   (om/reconciler
     {:state app-state
      :parser (om/parser {:read p/read :mutate p/mutate })}))
+
+(def tracker (om/factory Tracker))
 
 (defui Root
   static om/IQuery

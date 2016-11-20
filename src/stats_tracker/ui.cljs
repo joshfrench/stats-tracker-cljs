@@ -12,7 +12,7 @@
   (render [this]
     (let [{:keys [level class str con dex wis int cha] :as stats} (om/props this)
           {:keys [change-class change-level change-stat]} (om/get-computed this)
-          {:keys [ac pd md hp atk hit miss]} (class stats)
+          {:keys [ac pd md hp atk hit miss]} ((classes class) stats)
           stat (fn [s] [:p (stat->name s) " "
                   [:input {:type "number"
                            :on-change #(change-stat s (.. % -target -value))
@@ -41,5 +41,3 @@
              [:p "HIT (" level " WEAPON) +" (:melee hit)]
              [:p "MISS " (:melee miss)]
              ]))))
-
-(def tracker (om/factory Tracker))

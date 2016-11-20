@@ -19,4 +19,4 @@
   hp (* (+ 6 (modifier con)) (hp-multiplier level)))
 
 (def classes {"Smashy Smash"  Smasher
-                "Sneaky Mofo"   Sneaker})
+              "Sneaky Mofo"   Sneaker})
