@@ -1,11 +1,8 @@
-(ns stats-tracker.class
-  (:require [stats-tracker.protocols :refer [ClassStats]]))
+(ns stats-tracker.class)
 
-(defn formula->fn
-  [[name & rest]]
-  `(~name [~'_]
-          (let [{:keys ~'[level str dex con wis int cha]} ~'stats] ~@rest)))
+(defn to-stat [[name fn]]
+  {(keyword name) fn})
 
 (defmacro class [name & fns]
-  (let [stats (map formula->fn fns)]
-    (do `(defrecord ~name [~'stats] ClassStats ~@(map formula->fn fns)))))
+  `(defn ~name [{:keys ~'[level str con dex wis int cha]}]
+     ~(apply merge {:level 'level} (map to-stat (partition 2 fns)))))
