@@ -2,7 +2,7 @@
   (:require [stats-tracker.utils :refer [middle modifier hp-multiplier tier]])
   (:require-macros [stats-tracker.class :refer [class]]))
 
-(def classes [
+(def classes (sort-by #(-> % meta :name) [
   (class Barbarian
           ac (-> (middle con dex wis) modifier (+ 12 level))
           pd (-> (middle str con dex) modifier (+ 11 level))
@@ -20,7 +20,7 @@
           ac (-> (middle con dex wis) modifier (+ 12 level))
           pd (-> (middle str con dex) modifier (+ 12 level))
           md (-> (middle int wis cha) modifier (+ 10 level))
-          hp (* (+ 6 (modifier con)) (hp-multiplier level)))])
+          hp (* (+ 6 (modifier con)) (hp-multiplier level)))]))
 
 (defn name->class [name]
   (first (filter #(= name (-> % meta :name)) classes)))
