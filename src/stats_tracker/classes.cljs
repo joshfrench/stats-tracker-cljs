@@ -4,23 +4,44 @@
 
 (def classes (sort-by #(-> % meta :name) [
   (class Barbarian
-          ac (-> (middle con dex wis) modifier (+ 12 level))
-          pd (-> (middle str con dex) modifier (+ 11 level))
-          md (-> (middle int wis cha) modifier (+ 10 level))
-          hp (* (+ 7 (modifier con)) (hp-multiplier level))
-          recovery-die 10
-          atk {:melee  (+ (modifier str) level)
+         ac (-> (middle con dex wis) modifier (+ 12 level))
+         pd (-> (middle str con dex) modifier (+ 11 level))
+         md (-> (middle int wis cha) modifier (+ 10 level))
+         hp (* (+ 7 (modifier con)) (hp-multiplier level))
+         recovery-die 10
+         atk {:melee  (+ (modifier str) level)
               :ranged (+ (modifier dex) level)}
-          hit {:melee  (* (tier level) (modifier str))
-              :ranged (* (tier level) (modifier dex))} ;; double-check this
-          miss {:melee level
-                :ranged 0})
+         hit {:melee  (* (tier level) (modifier str))
+              :ranged (* (tier level) (modifier dex))}
+         miss {:melee level
+               :ranged 0})
 
   (class Rogue
-          ac (-> (middle con dex wis) modifier (+ 12 level))
-          pd (-> (middle str con dex) modifier (+ 12 level))
-          md (-> (middle int wis cha) modifier (+ 10 level))
-          hp (* (+ 6 (modifier con)) (hp-multiplier level)))]))
+         ac (-> (middle con dex wis) modifier (+ 12 level))
+         pd (-> (middle str con dex) modifier (+ 12 level))
+         md (-> (middle int wis cha) modifier (+ 10 level))
+         hp (* (+ 6 (modifier con)) (hp-multiplier level))
+         recovery-die 8
+         atk {:melee  (+ (modifier dex) level)
+              :ranged (+ (modifier dex) level)}
+         hit {:melee  (* (tier level) (modifier dex))
+              :ranged (* (tier level) (modifier dex))}
+         miss {:melee level
+               :ranged level})
+
+  (class Ranger
+         ac (-> (middle con dex wis) modifier (+ 14 level))
+         pd (-> (middle str con dex) modifier (+ 11 level))
+         md (-> (middle int wis cha) modifier (+ 10 level))
+         hp (* (+ 7 (modifier con)) (hp-multiplier level))
+         recovery-die 8
+         atk {:melee  (+ (modifier (max str dex)) level)
+              :ranged (+ (modifier dex) level)}
+         hit {:melee  (* (tier level) (modifier str))
+              :ranged (* (tier level) (modifier dex))}
+         miss {:melee level
+               :ranged level})
+  ]))
 
 (defn name->class [name]
   (first (filter #(= name (-> % meta :name)) classes)))
