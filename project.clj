@@ -17,15 +17,4 @@
                                    :source-map "resources/public/js/main.js.map"
                                    :output-dir "resources/public/js/compiled"}}]}
   :clean-targets ^{:protect false} ["resources/public/js"
-                                    :target-path]
-  :profiles {:uberjar {:source-paths ["src/stats_tracker"]
-                       :hooks [lein.cljsbuild]
-                       :env {:production true}
-                       :omit-source true
-                       :aot :all
-                       :cljsbuild {:builds
-                                   {:app
-                                    {:source-paths ["src/stats_tracker"]
-                                     :compiler
-                                      {:optimizations :advanced
-                                       :pretty-print false}}}}}})
+                                    :target-path])
