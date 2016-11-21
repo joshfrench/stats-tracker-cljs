@@ -1,6 +1,6 @@
 (ns stats-tracker.parser
   (:require [om.next :as om]
-            [stats-tracker.classes :refer [classes]]))
+            [stats-tracker.classes :refer [classes name->class]]))
 
 (defmulti read om/dispatch)
 
@@ -20,7 +20,7 @@
 
 (defmethod mutate 'class/change
   [{:keys [state]} _ {new-class :class}]
-  (when-let [[new-class _] (find classes new-class)]
+  (when (name->class new-class)
     {:action #(swap! state assoc :class new-class)}))
 
 (defn valid-stat? [stat] (some #{stat} [:str :dex :con :int :wis :cha]))

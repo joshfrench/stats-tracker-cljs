@@ -2,7 +2,7 @@
   (:require [clojure.string :refer [upper-case]]
             [om.next :as om :refer-macros [defui]]
             [sablono.core :as html :refer-macros [html]]
-            [stats-tracker.classes :refer [classes]]
+            [stats-tracker.classes :refer [classes name->class]]
             [stats-tracker.utils :refer [modifier tier]]))
 
 (defn stat->name [s]
@@ -13,7 +13,7 @@
   (render [this]
     (let [{:keys [level class str con dex wis int cha] :as stats} (om/props this)
           {:keys [change-class change-level change-stat]} (om/get-computed this)
-          {:keys [ac pd md hp atk hit miss recovery-die]} ((classes class) stats)]
+          {:keys [ac pd md hp atk hit miss recovery-die]} ((name->class class) stats)]
       (html [:form {:class "container"}
              [:h1 "Stats Tracker"]
              ;; Class & Level
@@ -24,7 +24,7 @@
                 [:select  {:on-change #(change-class (.. % -target -value))
                            :class "form-control"
                            :id "class-select"}
-                 (map #(vector :option {:key %} %)  (keys classes))]]]
+                 (map #(vector :option {:key %} %) (map #(-> % meta :name) classes))]]]
               [:div {:class "form-group col-md-4"}
                [:label {:class "col-md-2 control-label":for "level-select"} "Level "]
                [:div {:class "col-md-2"}

@@ -8,7 +8,7 @@
              [stats-tracker.parser :as p]))
 
 (defonce app-state
-  (atom {:class (-> classes keys first)
+  (atom {:class (-> classes first meta :name)
          :level 1
          :str   8
          :dex   8

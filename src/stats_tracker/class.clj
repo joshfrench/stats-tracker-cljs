@@ -4,5 +4,5 @@
   {(keyword name) fn})
 
 (defmacro class [name & fns]
-  `(defn ~name [{:keys ~'[level str con dex wis int cha]}]
-     ~(apply merge {:level 'level} (map to-stat (partition 2 fns)))))
+  `(def ~name (with-meta (fn [{:keys ~'[level str con dex wis int cha]}]
+     ~(apply merge {:level 'level} (map to-stat (partition 2 fns)))) {:name (str '~name)})))
