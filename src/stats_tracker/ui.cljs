@@ -97,7 +97,11 @@
                 [:tbody
                  [:tr
                   [:th {:scope "row"} "Melee"]
-                  (map-indexed (fn [i stat] (vector :td (when (= 0 i) "+") (:melee stat))) [atk hit miss])]
+                    [:td "d20 + " (:melee atk)]
+                    [:td "(" level " WEAPON) + " (:melee hit)]
+                    [:td (:melee miss)]]
                  [:tr
                   [:th {:scope "row"} "Ranged"]
-                  (map-indexed (fn [i stat] (vector :td (when (= 0 i) "+") (:ranged stat))) [atk hit miss])]]]]]]))))
+                  [:td "d20 + " (:ranged atk)]
+                  [:td "(" level " WEAPON) + " (:ranged hit)]
+                  [:td (:ranged miss)]]]]]]]))))
