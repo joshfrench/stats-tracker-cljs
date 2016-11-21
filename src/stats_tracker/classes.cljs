@@ -7,10 +7,13 @@
   pd (-> (middle str con dex) modifier (+ 11 level))
   md (-> (middle int wis cha) modifier (+ 10 level))
   hp (* (+ 7 (modifier con)) (hp-multiplier level))
+  recovery-die 10
   atk {:melee (+ (modifier str) level)
        :ranged (+ (modifier dex) level)}
-  hit {:melee (* (tier level) (modifier str))}
-  miss {:melee level})
+  hit {:melee (* (tier level) (modifier str))
+       :ranged (* (tier level) (modifier dex))} ;; double-check this
+  miss {:melee level
+        :ranged 0})
 
 (class Sneaker
   ac (-> (middle con dex wis) modifier (+ 12 level))

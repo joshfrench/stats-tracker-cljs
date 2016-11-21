@@ -26,7 +26,7 @@
 
 (defui Root
   static om/IQuery
-  (query [_] [:level :class :str :con :dex :wis :int :cha])
+  (query [_] [:level :class :str :con :dex :wis :int :cha :recovery-die])
 
   Object
   (render [this]

@@ -27,7 +27,9 @@
 
 (defmethod mutate 'stat/change
   [{:keys [state]} _ params]
-  (let [[stat new-value] (first params)]
-    (when (valid-stat? stat)
-      {:action #(swap! state assoc stat (js/parseInt new-value))})))
+  (let [[stat new-value] (first params)
+        new-value (js/parseInt new-value)]
+    (when (and (valid-stat? stat)
+               (<= 8 new-value 20))
+      {:action #(swap! state assoc stat new-value)})))
 
