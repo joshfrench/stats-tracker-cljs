@@ -39,7 +39,7 @@
              [:hr]
              [:div {:class "row"}
               [:div {:class "col-md-12"}
-              [:table {:class "table table-borderedx"}
+              [:table {:class "table table-responsive"}
                [:thead
                 [:tr
                  [:th]
@@ -92,7 +92,8 @@
               [:div {:class "col-md-6"}
                [:table {:class "table"}
                 [:thead
-                 (map #(vector :th %) ["" "ATTACK" "HIT" "MISS"])]
+                 [:tr
+                  (map #(vector :th %) ["" "ATTACK" "HIT" "MISS"])]]
                 [:tbody
                  [:tr
                   [:th {:scope "row"} "Melee"]
