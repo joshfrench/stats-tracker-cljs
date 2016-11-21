@@ -19,6 +19,9 @@
     "url": "https://github.com/joshfrench/stats-tracker/issues"
   },
   "homepage": "https://github.com/joshfrench/stats-tracker#readme",
+  "engines": {
+    "node": "5.4.0"
+  },
   "dependencies": {
     "express": "^4.14.0",
     "express-static-gzip": "^0.1.2"
