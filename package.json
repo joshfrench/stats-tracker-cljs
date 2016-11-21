@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "lein clean && rlwrap lein run -m clojure.main script/figwheel.clj",
-    "build": "lein cljsbuild once && gzip -k resources/public/js/main.js",
+    "build": "lein cljsbuild once && gzip -fk resources/public/js/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
