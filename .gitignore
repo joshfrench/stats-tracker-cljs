@@ -11,7 +11,8 @@ pom.xml.asc
 .lein-failures
 .nrepl-port
 figwheel_server.log
-resources/public/js/
+resources/public/js/compiled
+resources/public/js/main.js.map
 /node_modules
 npm-debug.log
 .DS_Store
