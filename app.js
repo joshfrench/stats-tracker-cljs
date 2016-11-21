@@ -1,8 +1,11 @@
 var express = require('express');
+var gzip = require('express-static-gzip');
 var app = express();
 
-app.use(express.static('resources/public'));
+var oneDay = 86400000;
 
-app.listen(3000, function() {
+app.use("/", gzip('resources/public', { ensureGzipedFiles: true, indexFromEmptyFile: true, maxAge: oneDay }));
+
+app.listen(process.env.PORT || 3000, function() {
   console.log('stats-tracker listening on 3000');
 });

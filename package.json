@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/joshfrench/stats-tracker#readme",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "express-static-gzip": "^0.1.2"
   },
   "private": true
 }
