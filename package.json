@@ -7,6 +7,7 @@
     "start": "rlwrap lein run -m clojure.main script/figwheel.clj",
     "build": "lein cljsbuild once && gzip -k resources/public/js/main.js",
     "clean": "lein clean",
+    "postinstall": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
