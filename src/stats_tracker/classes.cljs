@@ -41,6 +41,19 @@
               :ranged (* (tier level) (modifier dex))}
          miss {:melee level
                :ranged level})
+
+  (class Druid
+         ac (-> (middle con dex wis) modifier (+ 10 level))
+         pd (-> (middle str con dex) modifier (+ 11 level))
+         md (-> (middle int wis cha) modifier (+ 11 level))
+         hp (* (+ 6 (modifier con)) (hp-multiplier level))
+         recovery-die 6
+         atk {:melee (+ (modifier (max str dex)) level)
+              :ranged (+ (modifier dex) level)}
+         hit {:melee (* (tier level) (modifier (max str dex)))
+              :ranged (* (tier level (modifier dex)))}
+         miss {:melee level
+               :ranged 0})
   ]))
 
 (defn name->class [name]
