@@ -1,12 +1,9 @@
-(ns stats-tracker.ui
+(ns stats-tracker.tracker
   (:require [clojure.string :refer [upper-case]]
             [om.next :as om :refer-macros [defui]]
             [sablono.core :as html :refer-macros [html]]
             [stats-tracker.classes :refer [classes name->class]]
             [stats-tracker.utils :refer [modifier tier]]))
-
-(defn stat->name [s]
-  (-> s name str upper-case))
 
 (defui Tracker
   Object
@@ -44,7 +41,7 @@
                 [:tr
                  [:th]
                  (map #(vector :th [:label {:for %} (upper-case %)])
-                      ["str" "con" "dex" "int" "wis" "cha"]) ]]
+                      ["str" "con" "dex" "int" "wis" "cha"])]]
                [:tbody
                 [:tr {:class "form-group"}
                  [:th {:scope "row"}]

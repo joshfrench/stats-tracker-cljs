@@ -4,7 +4,7 @@
              [clojure.string :refer [upper-case]]
              [goog.dom :as gdom]
              [stats-tracker.classes :refer [classes]]
-             [stats-tracker.ui :refer [Tracker]]
+             [stats-tracker.tracker :refer [Tracker]]
              [stats-tracker.parser :as p]))
 
 (defonce app-state
@@ -26,7 +26,7 @@
 
 (defui Root
   static om/IQuery
-  (query [_] [:level :class :str :con :dex :wis :int :cha :recovery-die])
+  (query [_] [:level :class :str :con :dex :wis :int :cha])
 
   Object
   (render [this]
