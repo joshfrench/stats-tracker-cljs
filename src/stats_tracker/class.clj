@@ -1,8 +1,11 @@
 (ns stats-tracker.class)
 
-(defn to-stat [[name fn]]
-  {(keyword name) fn})
+(defmacro base-hp [hp]
+  `{:hp (* (+ ~hp ~'(modifier con)) ~'(hp-multiplier level))})
 
-(defmacro class [name & fns]
-  `(def ~name (with-meta (fn [{:keys ~'[level str con dex wis int cha]}]
-     ~(apply merge {:level 'level} (map to-stat (partition 2 fns)))) {:name (str '~name)})))
+(defmacro base-ac [ac]
+  `{:ac 12})
+
+(defmacro class [name & stats]
+  `(defn ~name [{:keys ~'[level str con dex wis int cha]}]
+     (merge ~@(partition 2 stats))))
