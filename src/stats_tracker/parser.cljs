@@ -2,10 +2,7 @@
   (:require [om.next :as om]
             [stats-tracker.classes :refer [classes name->class]]))
 
-(defmulti read om/dispatch)
-
-(defmethod read :default
-  [{:keys [state] :as env} key _]
+(defn read [{:keys [state] :as env} key _]
   (let [st @state]
     (when-let [[_ v] (find st key)]
       {:value v})))
