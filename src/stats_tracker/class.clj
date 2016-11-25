@@ -7,5 +7,8 @@
   `{:ac 12})
 
 (defmacro class [name & stats]
-  `(defn ~name [{:keys ~'[level str con dex wis int cha]}]
-     (merge ~@(partition 2 stats))))
+  `(def ~name
+     (with-meta
+       (fn [{:keys ~'[level str con dex wis int cha]}]
+         (merge ~@(partition 2 stats)))
+       {:name (str '~name)})))
