@@ -1,3 +1,2 @@
-dev: rlwrap lein run -m clojure.main script/figwheel.clj
-build: lein cljsbuild once
-clean: lein clean
+npm start: dev server
+npm run build: optimized production build
