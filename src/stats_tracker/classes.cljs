@@ -1,62 +1,59 @@
 (ns stats-tracker.classes
   (:require [stats-tracker.utils :refer [middle modifier hp-multiplier tier]])
   (:require-macros [stats-tracker.class :refer [class]]
-                   [stats-tracker.stats :refer [base-hp base-ac]]))
+                   [stats-tracker.stats :refer [base-hp base-ac base-pd base-md recovery-die
+                                                attack melee-attack ranged-attack
+                                                hit melee-hit ranged-hit
+                                                miss melee-miss ranged-miss]]))
 
 (def classes (sort-by #(-> % meta :name) [
   (class Barbarian
          base-hp 7
-         ;; hp (* (+ 7 (modifier con)) (hp-multiplier level))
-         ;; ac (-> (middle con dex wis) modifier (+ 12 level))
-         ;; pd (-> (middle str con dex) modifier (+ 11 level))
-         ;; md (-> (middle int wis cha) modifier (+ 10 level))
-         ;; recovery-die 10
-         ;; atk {:melee  (+ (modifier str) level)
-         ;;      :ranged (+ (modifier dex) level)}
-         ;; hit {:melee  (* (tier level) (modifier str))
-         ;;      :ranged (* (tier level) (modifier dex))}
-         ;; miss {:melee level
-               ;; :ranged 0}
-         )
+         base-ac 12
+         base-pd 11
+         base-md 10
+         recovery-die 10
+         melee-attack str
+         ranged-attack dex
+         melee-hit str
+         ranged-hit dex
+         melee-miss level
+         ranged-miss 0)
 
-  #_(class Rogue
-         ac (-> (middle con dex wis) modifier (+ 12 level))
-         pd (-> (middle str con dex) modifier (+ 12 level))
-         md (-> (middle int wis cha) modifier (+ 10 level))
-         hp (* (+ 6 (modifier con)) (hp-multiplier level))
+  (class Rogue
+         base-hp 6
+         base-ac 12
+         base-pd 12
+         base-md 10
          recovery-die 8
-         atk {:melee  (+ (modifier dex) level)
-              :ranged (+ (modifier dex) level)}
-         hit {:melee  (* (tier level) (modifier dex))
-              :ranged (* (tier level) (modifier dex))}
-         miss {:melee level
-               :ranged level})
+         attack dex
+         hit dex
+         miss level)
 
-  #_(class Ranger
-         ac (-> (middle con dex wis) modifier (+ 14 level))
-         pd (-> (middle str con dex) modifier (+ 11 level))
-         md (-> (middle int wis cha) modifier (+ 10 level))
-         hp (* (+ 7 (modifier con)) (hp-multiplier level))
+  (class Ranger
+         base-hp 7
+         base-ac 14
+         base-pd 11
+         base-md 10
          recovery-die 8
-         atk {:melee  (+ (modifier (max str dex)) level)
-              :ranged (+ (modifier dex) level)}
-         hit {:melee  (* (tier level) (modifier str))
-              :ranged (* (tier level) (modifier dex))}
-         miss {:melee level
-               :ranged level})
+         melee-attack (max str dex)
+         ranged-attack dex
+         melee-hit str
+         ranged-hit dex
+         miss level)
 
   (class Druid
-         ac (-> (middle con dex wis) modifier (+ 10 level))
-         pd (-> (middle str con dex) modifier (+ 11 level))
-         md (-> (middle int wis cha) modifier (+ 11 level))
-         hp (* (+ 6 (modifier con)) (hp-multiplier level))
+         base-hp 6
+         base-ac 10
+         base-pd 11
+         base-md 11
          recovery-die 6
-         atk {:melee (+ (modifier (max str dex)) level)
-              :ranged (+ (modifier dex) level)}
-         hit {:melee (* (tier level) (modifier (max str dex)))
-              :ranged (* (tier level (modifier dex)))}
-         miss {:melee level
-               :ranged 0})
+         melee-attack (max str dex)
+         ranged-attack dex
+         melee-hit (max str dex)
+         ranged-hit dex
+         melee-miss level
+         ranged-miss 0)
   ]))
 
 (defn name->class [name]

@@ -13,7 +13,7 @@
   (render [this]
     (let [{:keys [level class str con dex wis int cha] :as stats} (om/props this)
           {:keys [change-class change-level change-stat]} (om/get-computed this)
-          {:keys [ac pd md hp atk hit miss recovery-die]} ((name->class class) stats)]
+          {:keys [ac pd md hp attack hit miss recovery-die]} ((name->class class) stats)]
       (html [:form {:class "container"}
              [:h1 "Stats Tracker"]
              ;; Class & Level
@@ -97,11 +97,11 @@
                 [:tbody
                  [:tr
                   [:th {:scope "row"} "Melee"]
-                    [:td "d20 + " (:melee atk)]
+                    [:td "d20 + " (:melee attack)]
                     [:td "(" level " WEAPON) + " (:melee hit)]
                     [:td (:melee miss)]]
                  [:tr
                   [:th {:scope "row"} "Ranged"]
-                  [:td "d20 + " (:ranged atk)]
+                  [:td "d20 + " (:ranged attack)]
                   [:td "(" level " WEAPON) + " (:ranged hit)]
                   [:td (:ranged miss)]]]]]]]))))
