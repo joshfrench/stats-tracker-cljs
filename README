@@ -1,2 +1,3 @@
 npm start: dev server
+visit localhost:3449
 npm run build: optimized production build
