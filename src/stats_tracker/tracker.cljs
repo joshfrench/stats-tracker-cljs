@@ -3,7 +3,7 @@
             [om.next :as om :refer-macros [defui]]
             [sablono.core :as html :refer-macros [html]]
             [stats-tracker.classes :refer [classes name->class]]
-            [stats-tracker.utils :refer [modifier tier]]))
+            [stats-tracker.utils :refer [modifier tier +-]]))
 
 (defui Tracker
   Object
@@ -82,8 +82,8 @@
                   (map #(vector :th {:class "col-md-6"} %) ["HP" "Recovery"])]]
                 [:tbody
                  [:tr
-                  (let [recovery (clojure.core/str level "d" recovery-die " + "
-                                                    (* (tier level) (modifier con)))]
+                  (let [recovery (clojure.core/str level "d" recovery-die " "
+                                                    (+- (* (tier level) (modifier con))))]
                     (map #(vector :td {:class "col-md-6"} %) [hp recovery]))]]]]]
              [:div {:class "row"}
               [:div {:class "col-md-6"}
@@ -94,11 +94,11 @@
                 [:tbody
                  [:tr
                   [:th {:scope "row"} "Melee"]
-                    [:td "d20 + " (:melee attack)]
-                    [:td "(" level " WEAPON) + " (:melee hit)]
+                    [:td "d20 " (+- (:melee attack))]
+                    [:td "(" level " WEAPON) " (+- (:melee hit))]
                     [:td (:melee miss)]]
                  [:tr
                   [:th {:scope "row"} "Ranged"]
-                  [:td "d20 + " (:ranged attack)]
-                  [:td "(" level " WEAPON) + " (:ranged hit)]
+                  [:td "d20 " (+- (:ranged attack))]
+                  [:td "(" level " WEAPON) " (+- (:ranged hit))]
                   [:td (:ranged miss)]]]]]]]))))
