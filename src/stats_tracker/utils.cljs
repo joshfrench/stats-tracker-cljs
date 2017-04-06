@@ -13,4 +13,7 @@
     7  2
     10 3))
 
-(defn +- [i] (str (if (< 0 i) "+" "-") " " (Math/abs i)))
+(defn +- [i]
+  (some-> (cond (< i 0) "-"
+                (> i 0) "+")
+          (str " " (Math/abs i))))
