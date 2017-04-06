@@ -54,6 +54,58 @@
          ranged-hit dex
          melee-miss level
          ranged-miss 0)
+
+  (class Cleric
+         base-hp 7
+         base-ac 15
+         base-pd 11
+         base-md 11
+         recovery-die 8
+         melee-attack str
+         ranged-attack dex
+         melee-hit str
+         ranged-hit dex
+         melee-miss level
+         ranged-miss 0)
+
+  (class Paladin
+         base-hp 8
+         base-ac 17
+         base-pd 10
+         base-md 12
+         recovery-die 10
+         melee-attack str
+         ranged-attack dex
+         melee-hit str
+         ranged-hit dex
+         melee-miss level
+         ranged-miss 0)
+
+  (class Fighter
+         base-hp 8
+         base-ac 15
+         base-pd 10
+         base-md 10
+         recovery-die 10
+         melee-attack str
+         ranged-attack dex
+         melee-hit str
+         ranged-hit dex
+         melee-miss level
+         ranged-miss 0)
+
+  (class Sorceror
+         base-hp 6
+         base-ac 10
+         base-pd 11
+         base-md 10
+         recovery-die 6
+         melee-attack str
+         ranged-attack dex
+         melee-hit str
+         ranged-hit dex
+         melee-miss level
+         ranged-miss 0)
   ]))
 
 (defn name->class [name]
