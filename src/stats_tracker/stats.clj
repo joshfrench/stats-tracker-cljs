@@ -41,3 +41,12 @@
 
 (defmacro miss [dmg]
   `(merge-with merge (~'melee-miss ~dmg) (~'ranged-miss ~dmg)))
+
+(defmacro common-stats []
+  `(merge-with merge
+               (~'melee-attack ~'str)
+               (~'ranged-attack ~'dex)
+               (~'melee-hit ~'str)
+               (~'ranged-hit ~'dex)
+               (~'melee-miss ~'level)
+               (~'ranged-miss 0)))
