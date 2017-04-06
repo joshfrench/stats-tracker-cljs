@@ -80,9 +80,30 @@
          base-pd 11
          base-md 10
          recovery-die 6
+         common-stats)
+
+  (class Wizard
+         base-hp 6
+         base-ac 10
+         base-pd 10
+         base-md 12
+         recovery-die 6
          melee-attack str
          ranged-attack dex
          melee-hit str
+         ranged-hit dex
+         melee-miss 0
+         ranged-miss 0)
+
+  (class Bard
+         base-hp 7
+         base-ac 12
+         base-pd 10
+         base-md 11
+         recovery-die 8
+         melee-attack (max str dex)
+         ranged-attack dex
+         melee-hit (max str dex)
          ranged-hit dex
          melee-miss level
          ranged-miss 0)
