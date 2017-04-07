@@ -4,8 +4,7 @@
                    [stats-tracker.stats :refer [base-hp base-ac base-pd base-md recovery-die
                                                 attack melee-attack ranged-attack
                                                 hit melee-hit ranged-hit
-                                                miss melee-miss ranged-miss
-                                                common-stats]]))
+                                                miss melee-miss ranged-miss]]))
 
 (def classes (sort-by #(-> % meta :name) [
   (class Barbarian
@@ -14,7 +13,12 @@
          base-pd 11
          base-md 10
          recovery-die 10
-         common-stats)
+         melee-attack str
+         ranged-attack dex
+         melee-hit str
+         ranged-hit dex
+         melee-miss level
+         ranged-miss 0)
 
   (class Rogue
          base-hp 6
@@ -56,7 +60,13 @@
          base-ac 15
          base-pd 11
          base-md 11
-         common-stats)
+         recovery-die 8
+         melee-attack str
+         ranged-attack dex
+         melee-hit str
+         ranged-hit dex
+         melee-miss level
+         ranged-miss 0)
 
   (class Paladin
          base-hp 8
@@ -64,7 +74,12 @@
          base-pd 10
          base-md 12
          recovery-die 10
-         common-stats)
+         melee-attack str
+         ranged-attack dex
+         melee-hit str
+         ranged-hit dex
+         melee-miss level
+         ranged-miss 0)
 
   (class Fighter
          base-hp 8
@@ -72,7 +87,12 @@
          base-pd 10
          base-md 10
          recovery-die 10
-         common-stats)
+         melee-attack str
+         ranged-attack dex
+         melee-hit str
+         ranged-hit dex
+         melee-miss level
+         ranged-miss 0)
 
   (class Sorceror
          base-hp 6
