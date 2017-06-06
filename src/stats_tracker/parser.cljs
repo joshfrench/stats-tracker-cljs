@@ -27,6 +27,6 @@
   (let [[stat new-value] (first params)
         new-value (js/parseInt new-value)]
     (when (and (valid-stat? stat)
-               (<= 8 new-value 20))
+               (<= 8 new-value 24))
       {:action #(swap! state assoc stat new-value)})))
 
